@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<driver>
+	<id>1</id>
+	<firstName>John</firstName>
+	<lastName>Smith</lastName>
+	<dayOfStart>11/03/2022</dayOfStart>
+</driver>
