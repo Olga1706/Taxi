@@ -1,4 +1,4 @@
-package com.solvd.taxi;
+package com.solvd.taxi.utilites.parsers;
 
 import com.solvd.taxi.dao.jdbcMySQLImpl.AddressesDAO;
 import com.solvd.taxi.models.DriversModel;
@@ -15,7 +15,9 @@ public class SaxReader {
 
     private static final Logger LOGGER = LogManager.getLogger(AddressesDAO.class);
 
+
     public static void main(String[] args) {
+
 
         try {
             File inputFile = new File("src/main/resources/xml/empty.xml");
@@ -28,6 +30,7 @@ public class SaxReader {
         }
     }
 }
+
 
 class UserHandler extends DefaultHandler {
 

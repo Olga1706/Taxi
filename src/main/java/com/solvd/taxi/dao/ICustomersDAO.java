@@ -6,7 +6,7 @@ public interface ICustomersDAO {
 
     void createCustomer(CustomersModel customer);
 
-    void updateCustomerById(int id);
+    void updateCustomerById(int rating, int id);
 
     void deleteCustomerById(int id);
 

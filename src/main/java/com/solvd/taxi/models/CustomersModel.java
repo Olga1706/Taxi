@@ -2,11 +2,12 @@ package com.solvd.taxi.models;
 
 import java.util.List;
 
-public class CustomersModel extends PersonModel{
+public class CustomersModel {
     private int id;
+    private String firstName;
+    private String lastName;
     private int rating;
     private String email;
-    private PersonModel person;
     private CustomerTypesModel customerTypes;
     private List<OrdersModel> orders;
 
@@ -14,21 +15,28 @@ public class CustomersModel extends PersonModel{
 
     }
 
-    public CustomersModel(int id, String firstName, String lastName,
-                          int id1, int rating, String email, PersonModel person,
-                          CustomerTypesModel customerTypes, List<OrdersModel> orders) {
-        super(id, firstName, lastName);
-        this.id = id1;
+    public CustomersModel(int id, String firstName, String lastName, int rating,
+                          String email, CustomerTypesModel customerTypes,
+                          List<OrdersModel> orders) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.rating = rating;
         this.email = email;
-        this.person = person;
         this.customerTypes = customerTypes;
         this.orders = orders;
     }
 
-    @Override
     public int getId() {
         return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     public int getRating() {
@@ -39,10 +47,6 @@ public class CustomersModel extends PersonModel{
         return email;
     }
 
-    public PersonModel getPerson() {
-        return person;
-    }
-
     public CustomerTypesModel getCustomerTypes() {
         return customerTypes;
     }
@@ -51,9 +55,16 @@ public class CustomersModel extends PersonModel{
         return orders;
     }
 
-    @Override
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public void setRating(int rating) {
@@ -62,10 +73,6 @@ public class CustomersModel extends PersonModel{
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public void setPerson(PersonModel person) {
-        this.person = person;
     }
 
     public void setCustomerTypes(CustomerTypesModel customerTypes) {
