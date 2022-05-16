@@ -4,13 +4,13 @@ import com.solvd.taxi.models.CustomersModel;
 
 public interface ICustomersDAO {
 
-    void createCustomer(CustomersModel customer);
+    void createCustomers(CustomersModel customersModel);
 
-    void updateCustomerById(int rating, int id);
+    void updateCustomersById(CustomersModel customersModel);
 
-    void deleteCustomerById(int id);
+    void deleteCustomersById(CustomersModel customersModel);
 
-    CustomersModel getCustomerById(int id);
+    CustomersModel getCustomers();
 
 }
 

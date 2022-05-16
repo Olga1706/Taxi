@@ -2,7 +2,7 @@ package com.solvd.taxi.models;
 
 import java.util.List;
 
-public class CustomersModel {
+public class CustomersModel extends OrdersModel{
     private int id;
     private String firstName;
     private String lastName;

@@ -1,16 +1,16 @@
 package com.solvd.taxi.models;
 
-public class LicensesModel {
+public class LicencesModel extends DriversModel{
     private int id;
     private String number;
     private String expDate;
     private DriversModel driversModel;
 
-    public LicensesModel() {
+    public LicencesModel() {
 
     }
 
-    public LicensesModel(int id, String number, String expDate, DriversModel driversModel) {
+    public LicencesModel(int id, String number, String expDate, DriversModel driversModel) {
         this.id = id;
         this.number = number;
         this.expDate = expDate;

@@ -8,10 +8,15 @@ public class CitiesModel {
 
     }
 
+    public CitiesModel(int id) {
+        this.id = id;
+    }
+
     public CitiesModel(int id, String cityName) {
         this.id = id;
         this.cityName = cityName;
     }
+
 
     public int getId() {
         return id;

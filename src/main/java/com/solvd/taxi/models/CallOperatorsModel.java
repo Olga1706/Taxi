@@ -2,15 +2,15 @@ package com.solvd.taxi.models;
 
 import javax.xml.bind.annotation.*;
 
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "operators")
-@XmlType(propOrder = { "id", "firstName", "lastName" })
+//@XmlAccessorType(XmlAccessType.FIELD)
+//@XmlRootElement(name = "operators")
+//@XmlType(propOrder = { "id", "firstName", "lastName" })
 public class CallOperatorsModel {
-    @XmlElement(name = "id")
+  //  @XmlElement(name = "id")
     private int id;
-    @XmlElement(name = "firstName")
+   // @XmlElement(name = "firstName")
     private String firstName;
-    @XmlElement(name = "lastName")
+   // @XmlElement(name = "lastName")
     private String lastName;
 
 

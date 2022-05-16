@@ -9,6 +9,10 @@ public class CustomerTypesModel {
 
     }
 
+    public CustomerTypesModel(int id) {
+        this.id = id;
+    }
+
     public CustomerTypesModel(int id, String types, int discount) {
         this.id = id;
         this.types = types;

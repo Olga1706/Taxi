@@ -8,9 +8,9 @@ public interface ICarOrdersDAO {
 
     void createCarOrders(CarOrdersModel carOrders);
 
-    void updateCarOrdersById(int id);
+    void updateCarOrdersById(CarOrdersModel carOrders);
 
-    void deleteCarOrdersById(int id);
+    void deleteCarOrdersById(CarOrdersModel carOrders);
 
-    CarOrdersModel getCarOrdersById(int id);
+    CarOrdersModel getCarOrders();
 }

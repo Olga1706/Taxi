@@ -7,9 +7,9 @@ public interface ICustomerTypesDAO {
 
     void createCustomerTypes(CustomerTypesModel customerTypes);
 
-    void updateCustomerTypesById(int id);
+    void updateCustomerTypesById(CustomerTypesModel customerTypes);
 
-    void deleteCustomerTypesById(int id);
+    void deleteCustomerTypesById(CustomerTypesModel customerTypes);
 
-    CustomerTypesModel getCustomerTypesById(int id);
+    CustomerTypesModel getCustomerTypes();
 }

@@ -5,11 +5,12 @@ import com.solvd.taxi.models.CarServicesModel;
 
 public interface ICarServicesDAO {
 
-    void createCarServices(CarServicesModel carServices);
 
-    void updateCarServicesById(int id);
+    void createCarServices(CarServicesModel carServicesModel);
 
-    void deleteCarServicesById(int id);
+    void updateCarServicesById(CarServicesModel carServicesModel);
 
-    CarServicesModel getCarServicesById(int id);
+    void deleteCarServicesById(CarServicesModel carServicesModel);
+
+    CarServicesModel getCarServices();
 }

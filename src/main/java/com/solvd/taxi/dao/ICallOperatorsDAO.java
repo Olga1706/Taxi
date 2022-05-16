@@ -7,9 +7,9 @@ public interface ICallOperatorsDAO {
 
     void createCallOperators(CallOperatorsModel callOperators);
 
-    void updateCallOperatorsById(int id);
+    void updateCallOperatorsById(CallOperatorsModel callOperators);
 
-    void deleteCallOperatorsById(int id);
+    void deleteCallOperatorsById(CallOperatorsModel callOperators);
 
-    CallOperatorsModel getCallOperatorsById(int id);
+    CallOperatorsModel getCallOperators();
 }

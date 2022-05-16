@@ -4,14 +4,21 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
+import java.util.ResourceBundle;
 
 public class ConnectionDB {
     private static final Logger LOGGER = LogManager.getLogger(ConnectionDB.class);
 
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String DBURL = "jdbc:mysql:localhost:3306/taxi";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "62901993";//зам
+/*  */
+    ResourceBundle resource = ResourceBundle.getBundle("db");
+    String USERNAME = resource.getString("db.username");
+    String PASSWORD = resource.getString("db.password");
+    String DBURL = resource.getString("db.url");
+
+
+
+
 
     private static ConnectionDB singleInstance = new ConnectionDB();
 
@@ -58,7 +65,6 @@ public class ConnectionDB {
         }
     }
 
-
     public static void close(ResultSet resultSet) {
         if (resultSet != null) {
             try {
@@ -68,4 +74,5 @@ public class ConnectionDB {
             }
         }
     }
+
 }

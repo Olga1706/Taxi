@@ -5,19 +5,21 @@ import java.util.List;
 public class CarOrdersModel {
     private int id;
     private double totalPrice;
-    private List<CarsModel> carsModels;
-    private List<CarServicesModel> carServicesModels;
+    private CarsModel carsModel;
+    private CarServicesModel carServicesModel;
+   // private List<CarsModel> carsModels;
+   // private List<CarServicesModel> carServicesModels;
 
     public CarOrdersModel() {
 
     }
 
-    public CarOrdersModel(int id, double totalPrice, List<CarsModel> carsModels,
-                          List<CarServicesModel> carServicesModels) {
+
+    public CarOrdersModel(int id, double totalPrice, CarsModel carsModel, CarServicesModel carServicesModel) {
         this.id = id;
         this.totalPrice = totalPrice;
-        this.carsModels = carsModels;
-        this.carServicesModels = carServicesModels;
+        this.carsModel = carsModel;
+        this.carServicesModel = carServicesModel;
     }
 
     public int getId() {
@@ -28,12 +30,12 @@ public class CarOrdersModel {
         return totalPrice;
     }
 
-    public List<CarsModel> getCarsModels() {
-        return carsModels;
+    public CarsModel getCarsModel() {
+        return carsModel;
     }
 
-    public List<CarServicesModel> getCarServicesModels() {
-        return carServicesModels;
+    public CarServicesModel getCarServicesModel() {
+        return carServicesModel;
     }
 
     public void setId(int id) {
@@ -44,11 +46,11 @@ public class CarOrdersModel {
         this.totalPrice = totalPrice;
     }
 
-    public void setCarsModels(List<CarsModel> carsModels) {
-        this.carsModels = carsModels;
+    public void setCarsModel(CarsModel carsModel) {
+        this.carsModel = carsModel;
     }
 
-    public void setCarServicesModels(List<CarServicesModel> carServicesModels) {
-        this.carServicesModels = carServicesModels;
+    public void setCarServicesModel(CarServicesModel carServicesModel) {
+        this.carServicesModel = carServicesModel;
     }
 }

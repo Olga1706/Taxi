@@ -1,6 +1,6 @@
 package com.solvd.taxi.utilites.parsers;
 
-import com.solvd.taxi.models.DriversModel;
+//import com.solvd.taxi.models.DriversModel;
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -9,7 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 public class SaxWriter {
-    public static void writeXML()throws FileNotFoundException, XMLStreamException {
+  /*  public static void writeXML()throws FileNotFoundException, XMLStreamException {
         DriversModel driver= new DriversModel(1,"John","Smith","11/03/2022");
         driver.setId(1);
         driver.setFirstName("John");
@@ -45,5 +45,5 @@ public class SaxWriter {
         writer.writeEndElement();
         writer.writeEndDocument();
     }
-
+*/
 }

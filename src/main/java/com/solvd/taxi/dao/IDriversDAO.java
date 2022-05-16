@@ -5,11 +5,11 @@ import com.solvd.taxi.models.DriversModel;
 
 public interface IDriversDAO {
 
-    void createDriver(DriversModel driver);
+    void createDriver(DriversModel driversModel);
 
-    void updateDriverById(int id);
+    void updateDriverById(DriversModel driversModel);
 
-    void deleteDriversById(int id);
+    void deleteDriversById(DriversModel driversModel);
 
-    DriversModel getDriverById(int id);
+    DriversModel getDrivers();
 }

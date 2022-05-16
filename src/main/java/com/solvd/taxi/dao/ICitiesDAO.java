@@ -6,11 +6,11 @@ import com.solvd.taxi.models.CitiesModel;
 
 public interface ICitiesDAO {
 
-    void createCities(CitiesModel cities);
+    void createCities(CitiesModel citiesModel);
 
-    void updateCitiesById(int id);
+    void updateCitiesById(CitiesModel citiesModel);
 
-    void deleteCitiesById(int id);
+    void deleteCitiesById(CitiesModel citiesModel);
 
-    CitiesModel getCitiesById(int id);
+    CitiesModel getCities();
 }

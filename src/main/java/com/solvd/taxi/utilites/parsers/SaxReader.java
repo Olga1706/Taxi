@@ -1,7 +1,7 @@
 package com.solvd.taxi.utilites.parsers;
 
-import com.solvd.taxi.dao.jdbcMySQLImpl.AddressesDAO;
-import com.solvd.taxi.models.DriversModel;
+//import com.solvd.taxi.dao.jdbcMySQLImpl.AddressesDAO;
+//import com.solvd.taxi.models.DriversModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.xml.sax.Attributes;
@@ -13,7 +13,7 @@ import java.io.File;
 
 public class SaxReader {
 
-    private static final Logger LOGGER = LogManager.getLogger(AddressesDAO.class);
+  /*  private static final Logger LOGGER = LogManager.getLogger(AddressesDAO.class);
 
 
     public static void main(String[] args) {
@@ -87,5 +87,5 @@ class UserHandler extends DefaultHandler {
             System.out.println("Day Of Start: "+driver.getDayOfStart());
             dayOfStart = false;
         }
-    }
+    } */
 }

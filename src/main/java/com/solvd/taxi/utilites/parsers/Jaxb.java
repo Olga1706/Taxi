@@ -1,6 +1,6 @@
 package com.solvd.taxi.utilites.parsers;
 
-import com.solvd.taxi.models.CallOperatorsModel;
+//import com.solvd.taxi.models.CallOperatorsModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,7 +11,7 @@ import javax.xml.bind.Unmarshaller;
 import java.io.File;
 
 public class Jaxb {
-    public static void writeToXML() throws JAXBException {
+   /* public static void writeToXML() throws JAXBException {
         final Logger LOGGER = LogManager.getLogger(Jaxb.class);
        // CallOperatorsModel operators = new CallOperatorsModel(3,"John", "Smith");
         CallOperatorsModel operators = new CallOperatorsModel();
@@ -41,5 +41,5 @@ public class Jaxb {
         } catch (JAXBException e) {
             e.printStackTrace();
         }
-    }
+    } */
 }

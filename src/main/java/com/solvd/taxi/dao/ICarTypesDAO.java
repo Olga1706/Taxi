@@ -5,11 +5,11 @@ import com.solvd.taxi.models.CarTypesModel;
 
 public interface ICarTypesDAO {
 
-    void createCarTypes(CarTypesModel carTypes);
+    void createCarTypes(CarTypesModel carTypesModel);
 
-    void updateCarTypesById(int id);
+    void updateCarTypesById(CarTypesModel carTypesModel);
 
-    void deleteCarTypesById(int id);
+    void deleteCarTypesById(CarTypesModel carTypesModel);
 
-    CarTypesModel getCarTypesById(int id);
+    CarTypesModel getCarTypes();
 }

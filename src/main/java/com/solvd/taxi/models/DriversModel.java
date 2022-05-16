@@ -2,24 +2,26 @@ package com.solvd.taxi.models;
 
 import java.util.List;
 
-public class DriversModel {
+public class DriversModel{
     private int id;
     private String firstName;
-    private String lastName;
     private String dayOfStart;
-   // private List<OrdersModel> orders;
-   // private List<LicensesModel> licenses;
+    private List<OrdersModel> ordersModel;
+    private List<LicencesModel> licencesModel;
 
 
     public DriversModel() {
 
     }
 
-    public DriversModel(int id, String firstName, String lastName, String dayOfStart) {
+    public DriversModel(int id, String firstName, String dayOfStart,
+                        List<OrdersModel> ordersModel,
+                        List<LicencesModel> licencesModel) {
         this.id = id;
         this.firstName = firstName;
-        this.lastName = lastName;
         this.dayOfStart = dayOfStart;
+        this.ordersModel = ordersModel;
+        this.licencesModel = licencesModel;
     }
 
     public int getId() {
@@ -30,12 +32,16 @@ public class DriversModel {
         return firstName;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
     public String getDayOfStart() {
         return dayOfStart;
+    }
+
+    public List<OrdersModel> getOrdersModel() {
+        return ordersModel;
+    }
+
+    public List<LicencesModel> getLicencesModel() {
+        return licencesModel;
     }
 
     public void setId(int id) {
@@ -46,11 +52,15 @@ public class DriversModel {
         this.firstName = firstName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public void setDayOfStart(String dayOfStart) {
         this.dayOfStart = dayOfStart;
+    }
+
+    public void setOrdersModel(List<OrdersModel> ordersModel) {
+        this.ordersModel = ordersModel;
+    }
+
+    public void setLicencesModel(List<LicencesModel> licencesModel) {
+        this.licencesModel = licencesModel;
     }
 }

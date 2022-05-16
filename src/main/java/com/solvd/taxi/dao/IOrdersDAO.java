@@ -1,15 +1,14 @@
 package com.solvd.taxi.dao;
 
-import com.solvd.taxi.models.LicensesModel;
 import com.solvd.taxi.models.OrdersModel;
 
 public interface IOrdersDAO {
 
-    void createOrder(OrdersModel order);
+    void createOrders(OrdersModel ordersModel);
 
-    void updateOrderById(int id);
+    void updateOrdersById(OrdersModel ordersModel);
 
-    void deleteOrderById(int id);
+    void deleteOrdersById(OrdersModel ordersModel);
 
-    OrdersModel getOrderById(int id);
+    OrdersModel getOrders();
 }
