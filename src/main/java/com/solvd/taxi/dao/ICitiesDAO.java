@@ -12,5 +12,5 @@ public interface ICitiesDAO {
 
     void deleteCitiesById(CitiesModel citiesModel);
 
-    CitiesModel getCities();
+    CitiesModel getCitiesById(int id);
 }

@@ -1,6 +1,7 @@
 package com.solvd.taxi.dao.jdbcMySQLImpl;
 
 import com.solvd.taxi.dao.ICarTypesDAO;
+import com.solvd.taxi.models.CallOperatorsModel;
 import com.solvd.taxi.models.CarTypesModel;
 import com.solvd.taxi.models.CarsModel;
 import com.solvd.taxi.utilites.ConnectionDB;
@@ -19,7 +20,8 @@ public class CarTypesDAO implements ICarTypesDAO {
     private static final Logger LOGGER = LogManager.getLogger(CarTypesDAO.class);
 
     final String DELETE = "DELETE FROM CarTypes WHERE id=?";
-    final String GET = "SELECT * FROM CarTypes ORDER BY id";
+    final String GET = "SELECT * FROM CarTypes WHERE id=?";
+    private static final String GET_ALL = "SELECT * FROM CarTypes";
     final String INSERT = "INSERT INTO CarTypes VALUES (?, ?)";
     final String UPDATE = "UPDATE CarTypes SET name=? WHERE id=?";
 
@@ -84,15 +86,17 @@ public class CarTypesDAO implements ICarTypesDAO {
     }
 
     @Override
-    public CarTypesModel getCarTypes() {
-        List<CarTypesModel> allCarTypes = new ArrayList<>();
+    public CarTypesModel getCarTypesById(int id) {
         Connection dbConnect = ConnectionDB.getConnection();
+        CarTypesModel carTypesModel = new CarTypesModel();
         try {
             stmt = dbConnect.prepareStatement(GET);
+            stmt.setInt(1, id);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                LOGGER.info("\nId: " + rs.getInt(1)
-                        + "\nClass car: " + rs.getString(2));
+                carTypesModel.setId(rs.getInt(1));
+                carTypesModel.setNameCar(rs.getString(2));
+                carTypesModel.toString();
             }
             LOGGER.info("ALL is OK!");
         } catch (Exception e) {
@@ -103,6 +107,32 @@ public class CarTypesDAO implements ICarTypesDAO {
             ConnectionDB.close(dbConnect);
             ConnectionDB.close(rs);
         }
-        return null;
+        return carTypesModel;
+    }
+
+    public List<CarTypesModel> getALLCarTypes() {
+        ArrayList<CarTypesModel> carTypes = new ArrayList<CarTypesModel>();
+        Connection dbConnect = ConnectionDB.getConnection();
+        try {
+            stmt = dbConnect.prepareStatement(GET_ALL);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                CarTypesModel carTypesModel = new CarTypesModel();
+                carTypesModel.setId(rs.getInt(1));
+                carTypesModel.setNameCar(rs.getString(2));
+                carTypes.add(carTypesModel);
+                carTypesModel.toString();
+            }
+            LOGGER.info("ALL is OK!");
+            LOGGER.info(carTypes);
+        } catch (Exception e) {
+            LOGGER.info(e);
+        }
+        finally {
+            ConnectionDB.close(stmt);
+            ConnectionDB.close(dbConnect);
+            ConnectionDB.close(rs);
+        }
+        return carTypes;
     }
 }

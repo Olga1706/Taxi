@@ -11,5 +11,5 @@ public interface ICustomerTypesDAO {
 
     void deleteCustomerTypesById(CustomerTypesModel customerTypes);
 
-    CustomerTypesModel getCustomerTypes();
+    CustomerTypesModel getCustomerTypesById(int id);
 }

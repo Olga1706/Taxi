@@ -6,13 +6,13 @@ public class CarServicesModel {
 
 
     public CarServicesModel() {
-
     }
 
     public CarServicesModel(int id, String naming) {
         this.id = id;
         this.naming = naming;
     }
+
 
     public int getId() {
         return id;
@@ -28,5 +28,13 @@ public class CarServicesModel {
 
     public String getNaming() {
         return naming;
+    }
+
+    @Override
+    public String toString() {
+        return "CarServicesModel{" +
+                "id=" + id +
+                ", naming='" + naming + '\'' +
+                '}';
     }
 }

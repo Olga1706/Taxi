@@ -1,9 +1,7 @@
 package com.solvd.taxi.dao.jdbcMySQLImpl;
 
 import com.solvd.taxi.dao.ICarsDAO;
-import com.solvd.taxi.models.CarOrdersModel;
-import com.solvd.taxi.models.CarsModel;
-import com.solvd.taxi.models.CustomersModel;
+import com.solvd.taxi.models.*;
 import com.solvd.taxi.utilites.ConnectionDB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,7 +18,8 @@ public class CarsDAO implements ICarsDAO {
     private static final Logger LOGGER = LogManager.getLogger(CarsDAO.class);
 
     final String DELETE = "DELETE FROM Cars WHERE id=?";
-    final String GET = "SELECT * FROM Cars ORDER BY id";
+    final String GET = "SELECT * FROM Cars WHERE id=?";
+    final String GET_ALL = "SELECT * FROM Cars";
     final String INSERT = "INSERT INTO Cars VALUES (?, ?, ?)";
     final String UPDATE = "UPDATE Cars SET number=? WHERE id=?";
 
@@ -86,16 +85,20 @@ public class CarsDAO implements ICarsDAO {
     }
 
     @Override
-    public CarsModel getCarsModel() {
-        List<CarsModel> allCars = new ArrayList<>();
+    public CarsModel getCarsModelById(int id) {
         Connection dbConnect = ConnectionDB.getConnection();
+        CarsModel carsModel = new CarsModel();
+        CarTypesModel carTypesModel = new CarTypesModel();
         try {
             stmt = dbConnect.prepareStatement(GET);
+            stmt.setInt(1, id);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                LOGGER.info("\nId: " + rs.getInt(1)
-                        + "\nNumber car: " + rs.getString(2)
-                        + "\nCar Types id: " + rs.getString(3));
+                carsModel.setId(rs.getInt(1));
+                carsModel.setNumberCar(rs.getString(2));
+                carTypesModel.setId(rs.getInt("id"));
+                carsModel.setCarTypesModel(carTypesModel);
+                carsModel.toString();
             }
             LOGGER.info("ALL is OK!");
         } catch (Exception e) {
@@ -106,6 +109,34 @@ public class CarsDAO implements ICarsDAO {
             ConnectionDB.close(dbConnect);
             ConnectionDB.close(rs);
         }
-        return null;
+        return carsModel;
+    }
+
+    @Override
+    public List<CarsModel> getAllCars() {
+        ArrayList<CarsModel> cars = new ArrayList<>();
+        Connection dbConnect = ConnectionDB.getConnection();
+        try {
+            stmt = dbConnect.prepareStatement(GET_ALL);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                CarsModel carsModel = new CarsModel();
+                carsModel.setId(rs.getInt(1));
+                carsModel.setNumberCar(rs.getString(2));
+                CarTypesDAO dao = new CarTypesDAO();
+                carsModel.setCarTypesModel(dao.getCarTypesById(rs.getInt("car_type_id")));
+                cars.add(carsModel);
+                carsModel.toString();
+            }
+            LOGGER.info("ALL is OK!");
+            LOGGER.info(cars);
+        } catch (Exception e) {
+            LOGGER.info(e);
+        } finally {
+            ConnectionDB.close(stmt);
+            ConnectionDB.close(dbConnect);
+            ConnectionDB.close(rs);
+        }
+        return cars;
     }
 }

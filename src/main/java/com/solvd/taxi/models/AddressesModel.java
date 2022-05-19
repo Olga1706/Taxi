@@ -15,6 +15,10 @@ public class AddressesModel {
         this.citiesModel = citiesModel;
     }
 
+    public AddressesModel(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
@@ -37,5 +41,14 @@ public class AddressesModel {
 
     public void setCitiesModel(CitiesModel citiesModel) {
         this.citiesModel = citiesModel;
+    }
+
+    @Override
+    public String toString() {
+        return "AddressesModel{" +
+                "id=" + id +
+                ", zipCode=" + zipCode +
+                ", citiesModel=" + citiesModel +
+                '}';
     }
 }

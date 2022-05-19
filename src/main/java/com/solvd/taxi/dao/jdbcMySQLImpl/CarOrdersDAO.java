@@ -1,8 +1,7 @@
 package com.solvd.taxi.dao.jdbcMySQLImpl;
 
 import com.solvd.taxi.dao.ICarOrdersDAO;
-import com.solvd.taxi.models.CarOrdersModel;
-import com.solvd.taxi.models.CarServicesModel;
+import com.solvd.taxi.models.*;
 import com.solvd.taxi.utilites.ConnectionDB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,7 +18,8 @@ public class CarOrdersDAO implements ICarOrdersDAO {
     private static final Logger LOGGER = LogManager.getLogger(CarOrdersDAO.class);
 
     final String DELETE = "DELETE FROM CarOrders WHERE id=?";
-    final String GET = "SELECT * FROM CarOrders ORDER BY id";
+    final String GET = "SELECT * FROM CarOrders WHERE id=?";
+    final String GET_ALL = "SELECT * FROM CarOrders";
     final String INSERT = "INSERT INTO CarOrders VALUES (?, ?)";
     final String UPDATE = "UPDATE CarOrders SET total=? WHERE id=?";
 
@@ -86,17 +86,23 @@ public class CarOrdersDAO implements ICarOrdersDAO {
     }
 
     @Override
-    public CarOrdersModel getCarOrders() {
-        List<CarOrdersModel> allCarOrders = new ArrayList<>();
+    public CarOrdersModel getCarOrdersById(int id) {
         Connection dbConnect = ConnectionDB.getConnection();
+        CarOrdersModel carOrdersModel = new CarOrdersModel();
+        CarsModel carsModel = new CarsModel();
+        CarServicesModel carServicesModel = new CarServicesModel();
         try {
             stmt = dbConnect.prepareStatement(GET);
+            stmt.setInt(1, id);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                LOGGER.info("\nId: " + rs.getInt(1)
-                        + "\nCar id: " + rs.getString(2)
-                        + "\nCar service id: " + rs.getString(3)
-                        + "\nTotal price: " + rs.getString(4));
+                carOrdersModel.setId(rs.getInt(1));
+                carsModel.setId(rs.getInt("id"));
+                carOrdersModel.setCarsModel(carsModel);
+                carServicesModel.setId(rs.getInt("id"));
+                carOrdersModel.setCarServicesModel(carServicesModel);
+                carOrdersModel.setTotalPrice(rs.getInt(4));
+                carOrdersModel.toString();
             }
             LOGGER.info("ALL is OK!");
         } catch (Exception e) {
@@ -107,6 +113,36 @@ public class CarOrdersDAO implements ICarOrdersDAO {
             ConnectionDB.close(dbConnect);
             ConnectionDB.close(rs);
         }
-        return null;
+        return carOrdersModel;
+    }
+
+    @Override
+    public List<CarOrdersModel> getAllCarOrders() {
+        ArrayList<CarOrdersModel> carOrders = new ArrayList<>();
+        Connection dbConnect = ConnectionDB.getConnection();
+        try {
+            stmt = dbConnect.prepareStatement(GET_ALL);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                CarOrdersModel carOrdersModel = new CarOrdersModel();
+                carOrdersModel.setId(rs.getInt(1));
+                CarsDAO dao = new CarsDAO();
+                carOrdersModel.setCarsModel(dao.getCarsModelById(rs.getInt("car_id")));
+                CarServicesDAO dao1 = new CarServicesDAO();
+                carOrdersModel.setCarServicesModel(dao1.getCarServicesById(rs.getInt("autoservice_id")));
+                carOrdersModel.setTotalPrice(rs.getInt(4));
+                carOrders.add(carOrdersModel);
+                carOrdersModel.toString();
+            }
+            LOGGER.info("ALL is OK!");
+            LOGGER.info(carOrders);
+        } catch (Exception e) {
+            LOGGER.info(e);
+        } finally {
+            ConnectionDB.close(stmt);
+            ConnectionDB.close(dbConnect);
+            ConnectionDB.close(rs);
+        }
+        return carOrders;
     }
 }

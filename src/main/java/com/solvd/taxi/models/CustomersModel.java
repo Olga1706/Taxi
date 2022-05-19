@@ -2,14 +2,14 @@ package com.solvd.taxi.models;
 
 import java.util.List;
 
-public class CustomersModel extends OrdersModel{
+public class CustomersModel {
     private int id;
     private String firstName;
     private String lastName;
     private int rating;
     private String email;
     private CustomerTypesModel customerTypes;
-    private List<OrdersModel> orders;
+    private OrdersModel orders;
 
     public CustomersModel () {
 
@@ -17,7 +17,7 @@ public class CustomersModel extends OrdersModel{
 
     public CustomersModel(int id, String firstName, String lastName, int rating,
                           String email, CustomerTypesModel customerTypes,
-                          List<OrdersModel> orders) {
+                          OrdersModel orders) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -25,6 +25,11 @@ public class CustomersModel extends OrdersModel{
         this.email = email;
         this.customerTypes = customerTypes;
         this.orders = orders;
+    }
+
+
+    public CustomersModel(int id) {
+        this.id = id;
     }
 
     public int getId() {
@@ -51,7 +56,7 @@ public class CustomersModel extends OrdersModel{
         return customerTypes;
     }
 
-    public List<OrdersModel> getOrders() {
+    public OrdersModel getOrders() {
         return orders;
     }
 
@@ -79,7 +84,20 @@ public class CustomersModel extends OrdersModel{
         this.customerTypes = customerTypes;
     }
 
-    public void setOrders(List<OrdersModel> orders) {
+    public void setOrders(OrdersModel orders) {
         this.orders = orders;
+    }
+
+    @Override
+    public String toString() {
+        return "CustomersModel{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", rating=" + rating +
+                ", email='" + email + '\'' +
+                ", customerTypes=" + customerTypes +
+                ", orders=" + orders +
+                '}';
     }
 }

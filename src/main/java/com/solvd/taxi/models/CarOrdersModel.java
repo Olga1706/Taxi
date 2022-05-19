@@ -4,22 +4,23 @@ import java.util.List;
 
 public class CarOrdersModel {
     private int id;
-    private double totalPrice;
     private CarsModel carsModel;
     private CarServicesModel carServicesModel;
-   // private List<CarsModel> carsModels;
-   // private List<CarServicesModel> carServicesModels;
+    private double totalPrice;
+
 
     public CarOrdersModel() {
-
     }
-
 
     public CarOrdersModel(int id, double totalPrice, CarsModel carsModel, CarServicesModel carServicesModel) {
         this.id = id;
         this.totalPrice = totalPrice;
         this.carsModel = carsModel;
         this.carServicesModel = carServicesModel;
+    }
+
+    public CarOrdersModel(int id) {
+        this.id = id;
     }
 
     public int getId() {
@@ -53,4 +54,15 @@ public class CarOrdersModel {
     public void setCarServicesModel(CarServicesModel carServicesModel) {
         this.carServicesModel = carServicesModel;
     }
+
+    @Override
+    public String toString() {
+        return "CarOrdersModel{" +
+                "id=" + id +
+                ", carsModel=" + carsModel +
+                ", carServicesModel=" + carServicesModel +
+                ", totalPrice=" + totalPrice +
+                '}';
+    }
 }
+

@@ -9,5 +9,5 @@ public interface IAddressesDAO {
 
     void deleteAddressesById(AddressesModel addresses);
 
-    AddressesModel getAddresses();
+    AddressesModel getAddressesById(int id);
 }

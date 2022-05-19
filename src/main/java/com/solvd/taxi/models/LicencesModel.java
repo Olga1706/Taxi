@@ -1,6 +1,6 @@
 package com.solvd.taxi.models;
 
-public class LicencesModel extends DriversModel{
+public class LicencesModel {
     private int id;
     private String number;
     private String expDate;
@@ -47,5 +47,15 @@ public class LicencesModel extends DriversModel{
 
     public void setDriversModel(DriversModel driversModel) {
         this.driversModel = driversModel;
+    }
+
+    @Override
+    public String toString() {
+        return "LicencesModel{" +
+                "id=" + id +
+                ", number='" + number + '\'' +
+                ", expDate='" + expDate + '\'' +
+                ", driversModel=" + driversModel +
+                '}';
     }
 }

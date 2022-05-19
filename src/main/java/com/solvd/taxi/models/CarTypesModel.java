@@ -13,6 +13,10 @@ public class CarTypesModel {
         this.nameCar = nameCar;
     }
 
+    public CarTypesModel(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
@@ -27,5 +31,13 @@ public class CarTypesModel {
 
     public void setNameCar(String nameCar) {
         this.nameCar = nameCar;
+    }
+
+    @Override
+    public String toString() {
+        return "CarTypesModel{" +
+                "id=" + id +
+                ", nameCar='" + nameCar + '\'' +
+                '}';
     }
 }

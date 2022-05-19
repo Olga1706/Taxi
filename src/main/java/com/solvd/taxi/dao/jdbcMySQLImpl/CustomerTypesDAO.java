@@ -19,7 +19,7 @@ public class CustomerTypesDAO implements ICustomerTypesDAO {
     private static final Logger LOGGER = LogManager.getLogger(CustomerTypesDAO.class);
 
     final String DELETE = "DELETE FROM CustomerTypes WHERE id=?";
-    final String GET = "SELECT * FROM CustomerTypes ORDER BY id";
+    final String GET = "SELECT * FROM CustomerTypes WHERE id=?";
     final String INSERT = "INSERT INTO CustomerTypes VALUES (?, ?, ?)";
     final String UPDATE = "UPDATE CustomerTypes SET discount=? WHERE id=?";
 
@@ -86,16 +86,18 @@ public class CustomerTypesDAO implements ICustomerTypesDAO {
     }
 
     @Override
-    public CustomerTypesModel getCustomerTypes() {
-        List<CustomerTypesModel> allCustomerTypes = new ArrayList<>();
+    public CustomerTypesModel getCustomerTypesById(int id) {
         Connection dbConnect = ConnectionDB.getConnection();
+        CustomerTypesModel customerTypesModel = new CustomerTypesModel();
         try {
             stmt = dbConnect.prepareStatement(GET);
+            stmt.setInt(1, id);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                LOGGER.info("\nId: " + rs.getInt(1)
-                        + "\nTypes discount: " + rs.getString(2)
-                        + "\nDiscount: " + rs.getString(3));
+                customerTypesModel.setId(rs.getInt(1));
+                customerTypesModel.setTypes(rs.getString(2));
+                customerTypesModel.setDiscount(rs.getInt(3));
+                customerTypesModel.toString();
             }
             LOGGER.info("ALL is OK!");
         } catch (Exception e) {
@@ -106,7 +108,7 @@ public class CustomerTypesDAO implements ICustomerTypesDAO {
             ConnectionDB.close(dbConnect);
             ConnectionDB.close(rs);
         }
-        return null;
+        return customerTypesModel;
     }
 }
 

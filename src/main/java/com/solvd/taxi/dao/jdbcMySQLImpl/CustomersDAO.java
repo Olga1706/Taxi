@@ -2,7 +2,9 @@ package com.solvd.taxi.dao.jdbcMySQLImpl;
 
 
 import com.solvd.taxi.dao.ICustomersDAO;
+import com.solvd.taxi.models.CustomerTypesModel;
 import com.solvd.taxi.models.CustomersModel;
+import com.solvd.taxi.models.OrdersModel;
 import com.solvd.taxi.utilites.ConnectionDB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,10 +23,11 @@ public class CustomersDAO implements ICustomersDAO {
    // private static final String FIND_ALL = "SELECT * FROM customers ORDER BY id";
 
     final String DELETE = "DELETE FROM Customers WHERE id=?";
-    final String GET = "SELECT * FROM Customers ORDER BY id";
+    final String GET = "SELECT * FROM Customers WHERE id=?";
+    final String GET_ALL = "SELECT * FROM Customers";
     final String INSERT = "INSERT INTO customers VALUES (?, ?, ?, ?, ?,?)";
     final String UPDATE = "UPDATE Customers SET rating=? WHERE id=?";
-    final String INNERJOIN = "SELECT Customers.f_name, Customers.l_name, Customers.email, Orders.time, Orders.total FROM Orders INNER JOIN Customers ON Orders.customer_id = Customers.id";
+    final String INNERJOIN = "SELECT Customers.id, Customers.f_name, Customers.l_name, Customers.email, Orders.time, Orders.total FROM Orders INNER JOIN Customers ON Orders.customer_id = Customers.id";
 
 
     PreparedStatement stmt = null;
@@ -94,59 +97,58 @@ public class CustomersDAO implements ICustomersDAO {
     }
 
     @Override
-    public CustomersModel getCustomers() {
-        List<CustomersModel> allCustomers = new ArrayList<>();
+    public CustomersModel getCustomersById(int id) {
         Connection dbConnect = ConnectionDB.getConnection();
+        CustomersModel customersModel = new CustomersModel();
+        CustomerTypesModel customerTypesModel = new CustomerTypesModel();
         try {
-           stmt = dbConnect.prepareStatement(GET);
-           rs = stmt.executeQuery();
+            stmt = dbConnect.prepareStatement(GET);
+            stmt.setInt(1, id);
+            rs = stmt.executeQuery();
             while (rs.next()) {
-                LOGGER.info("\nId: " + rs.getInt(1)
-                        + "\nFirst name: " + rs.getString(2)
-                        + "\nLast name: " + rs.getString(3)
-                        + "\nRating: " + rs.getString(4)
-                        + "\nEmail: " + rs.getString(5)
-                        + "\nCustomer Types id: " + rs.getString(6));
+                customersModel.setId(rs.getInt(1));
+                customersModel.setFirstName(rs.getString(2));
+                customersModel.setLastName(rs.getString(3));
+                customersModel.setRating(rs.getInt(4));
+                customersModel.setEmail(rs.getString(5));
+                customerTypesModel.setId(rs.getInt("id"));
+                customersModel.setCustomerTypes(customerTypesModel);
+                customersModel.toString();
             }
             LOGGER.info("ALL is OK!");
         } catch (Exception e) {
             LOGGER.info(e);
         }
-        /*finally {
-            ConnectionDB.close(stmt);
-            ConnectionDB.close(dbConnect);
-            try {
-                rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }*/
         finally {
             ConnectionDB.close(stmt);
             ConnectionDB.close(dbConnect);
             ConnectionDB.close(rs);
         }
-        return null;
+        return customersModel;
     }
+
 
     public List<CustomersModel> getCustomersInnerJoinOrders() {
         ArrayList<CustomersModel> allCustomers = new ArrayList<>();
+        OrdersModel ordersModel = new OrdersModel();
         Connection dbConnect = ConnectionDB.getConnection();
         try {
             stmt = dbConnect.prepareStatement(INNERJOIN);
             rs = stmt.executeQuery();
             while (rs.next()) {
                 CustomersModel customersModel = new CustomersModel();
-                //customersModel.setId(rs.getInt("id"));
+                customersModel.setId(rs.getInt("id"));
                 customersModel.setFirstName(rs.getString("f_name"));
                 customersModel.setFirstName(rs.getString("l_name"));
                 customersModel.setEmail(rs.getString("email"));
-                customersModel.setTime(rs.getString("time"));
-                customersModel.setTotal(rs.getDouble("total"));
+                ordersModel.setTime(rs.getString("time"));
+                customersModel.setOrders(ordersModel);
+                ordersModel.setTotal(rs.getDouble("total"));
+                customersModel.setOrders(ordersModel);
                 allCustomers.add(customersModel);
             }
             LOGGER.info("ALL is OK!");
-            return allCustomers;
+            LOGGER.info(allCustomers);
         } catch (Exception e) {
             LOGGER.info(e);
         }
@@ -155,8 +157,42 @@ public class CustomersDAO implements ICustomersDAO {
             ConnectionDB.close(dbConnect);
             ConnectionDB.close(rs);
         }
-        return null;
+        return allCustomers;
     }
 
 
+
+    @Override
+    public List<CustomersModel> getAllCustomers() {
+        ArrayList<CustomersModel> customersModels = new ArrayList<>();
+       // CustomerTypesModel customerTypesModel = new CustomerTypesModel();
+        Connection dbConnect = ConnectionDB.getConnection();
+        try {
+            stmt = dbConnect.prepareStatement(GET_ALL);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                CustomersModel customersModel = new CustomersModel();
+                customersModel.setId(rs.getInt("id"));
+                customersModel.setFirstName(rs.getString("f_name"));
+                customersModel.setLastName(rs.getString("l_name"));
+                customersModel.setRating(rs.getInt("rating"));
+                customersModel.setEmail(rs.getString("email"));
+                CustomerTypesDAO dao = new CustomerTypesDAO();
+                customersModel.setCustomerTypes(dao.getCustomerTypesById(rs.getInt("id")));
+                //customerTypesModel.setId(rs.getInt("CustomerTypes_id"));
+               // customersModel.setCustomerTypes(customerTypesModel);
+               customersModels.add(customersModel);
+               customersModel.toString();
+            }
+            LOGGER.info("ALL is OK!");
+            LOGGER.info(customersModels);
+        } catch (Exception e) {
+            LOGGER.info(e);
+        } finally {
+            ConnectionDB.close(stmt);
+            ConnectionDB.close(dbConnect);
+            ConnectionDB.close(rs);
+        }
+        return customersModels;
+    }
 }

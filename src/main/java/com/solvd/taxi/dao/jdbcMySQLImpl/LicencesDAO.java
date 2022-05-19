@@ -1,9 +1,7 @@
 package com.solvd.taxi.dao.jdbcMySQLImpl;
 
 import com.solvd.taxi.dao.ILicencesDAO;
-import com.solvd.taxi.models.CustomersModel;
-import com.solvd.taxi.models.DriversModel;
-import com.solvd.taxi.models.LicencesModel;
+import com.solvd.taxi.models.*;
 import com.solvd.taxi.utilites.ConnectionDB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,7 +19,8 @@ public class LicencesDAO implements ILicencesDAO {
 
 
     final String DELETE = "DELETE FROM License WHERE id=?";
-    final String GET = "SELECT * FROM License ORDER BY id";
+    final String GET = "SELECT * FROM License WHERE id=?";
+    final String GET_ALL = "SELECT * FROM License";
     final String INSERT = "INSERT INTO License VALUES (?, ?, ?, ?)";
     final String UPDATE = "UPDATE License SET exp_day=? WHERE id=?";
     //final String INNERJOIN = "SELECT License.id, License.number, License.exp_day, Drivers.f_name, FROM Drivers INNER JOIN License ON License.driver_id = License.id";
@@ -90,17 +89,21 @@ public class LicencesDAO implements ILicencesDAO {
     }
 
     @Override
-    public LicencesModel getLicences() {
-        List<LicencesModel> allLicences = new ArrayList<>();
+    public LicencesModel getLicencesById(int id) {
         Connection dbConnect = ConnectionDB.getConnection();
+        LicencesModel licencesModel = new LicencesModel();
+        DriversModel driversModel = new DriversModel();
         try {
             stmt = dbConnect.prepareStatement(GET);
+            stmt.setInt(1, id);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                LOGGER.info("\nId: " + rs.getInt(1)
-                        + "\nNumber licence: " + rs.getString(2)
-                        + "\nExploitation day: " + rs.getString(3)
-                        + "\nDriver id: " + rs.getString(4));
+                licencesModel.setId(rs.getInt(1));
+                licencesModel.setNumber(rs.getString(2));
+                licencesModel.setExpDate(rs.getString(3));
+                driversModel.setId(rs.getInt("id"));
+                licencesModel.setDriversModel(driversModel);
+                licencesModel.toString();
             }
             LOGGER.info("ALL is OK!");
         } catch (Exception e) {
@@ -111,9 +114,37 @@ public class LicencesDAO implements ILicencesDAO {
             ConnectionDB.close(dbConnect);
             ConnectionDB.close(rs);
         }
-        return null;
+        return licencesModel;
     }
 
+    @Override
+    public List<LicencesModel> getAllLicences() {
+        ArrayList<LicencesModel> licences = new ArrayList<>();
+        Connection dbConnect = ConnectionDB.getConnection();
+        try {
+            stmt = dbConnect.prepareStatement(GET_ALL);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                LicencesModel licencesModel = new LicencesModel();
+                licencesModel.setId(rs.getInt(1));
+                licencesModel.setNumber(rs.getString(2));
+                licencesModel.setExpDate(rs.getString(3));
+                DriversDAO dao = new DriversDAO();
+                licencesModel.setDriversModel(dao.getDriversById(rs.getInt("driver_id")));
+                licences.add(licencesModel);
+                licencesModel.toString();
+            }
+            LOGGER.info("ALL is OK!");
+            LOGGER.info(licences);
+        } catch (Exception e) {
+            LOGGER.info(e);
+        } finally {
+            ConnectionDB.close(stmt);
+            ConnectionDB.close(dbConnect);
+            ConnectionDB.close(rs);
+        }
+        return licences;
+    }
 /*
     public List<LicencesModel> getLicencesInnerJoinDrivers() {
         ArrayList<LicencesModel> allLicences = new ArrayList<>();

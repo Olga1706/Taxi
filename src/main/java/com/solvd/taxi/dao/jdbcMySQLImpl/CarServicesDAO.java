@@ -3,6 +3,8 @@ package com.solvd.taxi.dao.jdbcMySQLImpl;
 import com.solvd.taxi.dao.ICarServicesDAO;
 import com.solvd.taxi.models.CarServicesModel;
 import com.solvd.taxi.models.CarTypesModel;
+import com.solvd.taxi.models.CustomerTypesModel;
+import com.solvd.taxi.models.CustomersModel;
 import com.solvd.taxi.utilites.ConnectionDB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,7 +21,8 @@ public class CarServicesDAO implements ICarServicesDAO {
     private static final Logger LOGGER = LogManager.getLogger(CarServicesDAO.class);
 
     final String DELETE = "DELETE FROM Autoservices WHERE id=?";
-    final String GET = "SELECT * FROM Autoservices ORDER BY id";
+    final String GET = "SELECT * FROM Autoservices WHERE id=?";
+    private static final String GET_ALL = "SELECT * FROM Autoservices";
     final String INSERT = "INSERT INTO Autoservices VALUES (?, ?)";
     final String UPDATE = "UPDATE Autoservices SET name=? WHERE id=?";
 
@@ -84,15 +87,17 @@ public class CarServicesDAO implements ICarServicesDAO {
     }
 
     @Override
-    public CarServicesModel getCarServices() {
-        List<CarServicesModel> allCarServices = new ArrayList<>();
+    public CarServicesModel getCarServicesById(int id) {
         Connection dbConnect = ConnectionDB.getConnection();
+        CarServicesModel carServicesModel = new CarServicesModel();
         try {
             stmt = dbConnect.prepareStatement(GET);
+            stmt.setInt(1, id);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                LOGGER.info("\nId: " + rs.getInt(1)
-                        + "\nCar name: " + rs.getString(2));
+                carServicesModel.setId(rs.getInt(1));
+                carServicesModel.setNaming(rs.getString(2));
+                carServicesModel.toString();
             }
             LOGGER.info("ALL is OK!");
         } catch (Exception e) {
@@ -103,6 +108,31 @@ public class CarServicesDAO implements ICarServicesDAO {
             ConnectionDB.close(dbConnect);
             ConnectionDB.close(rs);
         }
-        return null;
+        return carServicesModel;
+    }
+
+    public List<CarServicesModel> getAllCarServices() {
+        ArrayList<CarServicesModel> carServices = new ArrayList<>();
+        Connection dbConnect = ConnectionDB.getConnection();
+        try {
+            stmt = dbConnect.prepareStatement(GET_ALL);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                CarServicesModel carServicesModel = new CarServicesModel();
+                carServicesModel.setId(rs.getInt("id"));
+                carServicesModel.setNaming(rs.getString("name"));
+                carServices.add(carServicesModel);
+                carServicesModel.toString();
+            }
+            LOGGER.info("ALL is OK!");
+            LOGGER.info(carServices);
+        } catch (Exception e) {
+            LOGGER.info(e);
+        } finally {
+            ConnectionDB.close(stmt);
+            ConnectionDB.close(dbConnect);
+            ConnectionDB.close(rs);
+        }
+        return carServices;
     }
 }

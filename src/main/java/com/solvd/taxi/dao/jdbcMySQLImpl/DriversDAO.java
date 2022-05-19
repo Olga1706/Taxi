@@ -1,6 +1,8 @@
 package com.solvd.taxi.dao.jdbcMySQLImpl;
 
 import com.solvd.taxi.dao.IDriversDAO;
+import com.solvd.taxi.models.CallOperatorsModel;
+import com.solvd.taxi.models.CarServicesModel;
 import com.solvd.taxi.models.CustomersModel;
 import com.solvd.taxi.models.DriversModel;
 import com.solvd.taxi.utilites.ConnectionDB;
@@ -19,7 +21,8 @@ public class DriversDAO implements IDriversDAO {
     private static final Logger LOGGER = LogManager.getLogger(DriversDAO.class);
 
     final String DELETE = "DELETE FROM Drivers WHERE id=?";
-    final String GET = "SELECT * FROM Drivers ORDER BY id";
+    final String GET = "SELECT * FROM Drivers WHERE id=?";
+    private static final String GET_ALL = "SELECT * FROM Drivers";
     final String INSERT = "INSERT INTO Drivers VALUES (?, ?, ?)";
     final String UPDATE = "UPDATE Drivers SET date_of_start=? WHERE id=?";
 
@@ -88,18 +91,20 @@ public class DriversDAO implements IDriversDAO {
     }
 
     @Override
-    public DriversModel getDrivers() {
-        List<DriversModel> allDrivers = new ArrayList<>();
+    public DriversModel getDriversById(int id) {
         Connection dbConnect = ConnectionDB.getConnection();
+        DriversModel driversModel = new DriversModel();
         try {
             stmt = dbConnect.prepareStatement(GET);
+            stmt.setInt(1, id);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                LOGGER.info("\nId: " + rs.getInt(1)
-                        + "\nFirst name: " + rs.getString(2)
-                        + "\nDay of start: " + rs.getString(3));
+                driversModel.setId(rs.getInt(1));
+                driversModel.setFirstName(rs.getString(2));
+                driversModel.setDayOfStart(rs.getString(3));
+                driversModel.toString();
             }
-            LOGGER.info("ALL is OK!");
+            //LOGGER.info("ALL is OK!");
         } catch (Exception e) {
             LOGGER.info(e);
         }
@@ -108,7 +113,32 @@ public class DriversDAO implements IDriversDAO {
             ConnectionDB.close(dbConnect);
             ConnectionDB.close(rs);
         }
-        return null;
+        return driversModel;
     }
 
+    public List<DriversModel> getAllDrivers() {
+        ArrayList<DriversModel> drivers = new ArrayList<>();
+        Connection dbConnect = ConnectionDB.getConnection();
+        try {
+            stmt = dbConnect.prepareStatement(GET_ALL);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                DriversModel driversModel = new DriversModel();
+                driversModel.setId(rs.getInt(1));
+                driversModel.setFirstName(rs.getString(2));
+                driversModel.setDayOfStart(rs.getString(3));
+                drivers.add(driversModel);
+                driversModel.toString();
+            }
+            LOGGER.info("ALL is OK!");
+            LOGGER.info(drivers);
+        } catch (Exception e) {
+            LOGGER.info(e);
+        } finally {
+            ConnectionDB.close(stmt);
+            ConnectionDB.close(dbConnect);
+            ConnectionDB.close(rs);
+        }
+        return drivers;
+    }
 }

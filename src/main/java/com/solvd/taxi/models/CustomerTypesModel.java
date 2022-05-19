@@ -42,5 +42,14 @@ public class CustomerTypesModel {
     public void setDiscount(int discount) {
         this.discount = discount;
     }
+
+    @Override
+    public String toString() {
+        return "CustomerTypesModel{" +
+                "id=" + id +
+                ", types='" + types + '\'' +
+                ", discount=" + discount +
+                '}';
+    }
 }
 

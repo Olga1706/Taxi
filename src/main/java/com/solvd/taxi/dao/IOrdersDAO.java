@@ -2,6 +2,8 @@ package com.solvd.taxi.dao;
 
 import com.solvd.taxi.models.OrdersModel;
 
+import java.util.List;
+
 public interface IOrdersDAO {
 
     void createOrders(OrdersModel ordersModel);
@@ -10,5 +12,7 @@ public interface IOrdersDAO {
 
     void deleteOrdersById(OrdersModel ordersModel);
 
-    OrdersModel getOrders();
+    OrdersModel getOrdersById(int id);
+
+    List<OrdersModel> getAllOrders();
 }

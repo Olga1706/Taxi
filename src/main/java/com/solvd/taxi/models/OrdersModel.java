@@ -2,25 +2,24 @@ package com.solvd.taxi.models;
 
 import java.util.List;
 
-public class OrdersModel extends DriversModel{
+public class OrdersModel {
     private int id;
     private String time;
     private double total;
-    private List<CustomersModel> customersModels;
-    private List<CarsModel> carsModels;
-    private List<DriversModel> driversModels;
+    private CustomersModel customersModels;
+    private CarsModel carsModels;
+    private DriversModel driversModels;
     private String fromAddress;
     private String toAddress;
-    private List<CallOperatorsModel> callOperatorsModels;
+    private CallOperatorsModel callOperatorsModels;
 
     public OrdersModel() {
 
     }
 
-    public OrdersModel(int id, String time, double total,
-                       List<CustomersModel> customersModels, List<CarsModel> carsModels,
-                       List<DriversModel> driversModels, String fromAddress, String toAddress,
-                       List<CallOperatorsModel> callOperatorsModels) {
+    public OrdersModel(int id, String time, double total, CustomersModel customersModels, CarsModel carsModels,
+                       DriversModel driversModels, String fromAddress, String toAddress,
+                       CallOperatorsModel callOperatorsModels) {
         this.id = id;
         this.time = time;
         this.total = total;
@@ -44,15 +43,15 @@ public class OrdersModel extends DriversModel{
         return total;
     }
 
-    public List<CustomersModel> getCustomersModels() {
+    public CustomersModel getCustomersModels() {
         return customersModels;
     }
 
-    public List<CarsModel> getCarsModels() {
+    public CarsModel getCarsModels() {
         return carsModels;
     }
 
-    public List<DriversModel> getDriversModels() {
+    public DriversModel getDriversModels() {
         return driversModels;
     }
 
@@ -64,7 +63,7 @@ public class OrdersModel extends DriversModel{
         return toAddress;
     }
 
-    public List<CallOperatorsModel> getCallOperatorsModels() {
+    public CallOperatorsModel getCallOperatorsModels() {
         return callOperatorsModels;
     }
 
@@ -80,15 +79,15 @@ public class OrdersModel extends DriversModel{
         this.total = total;
     }
 
-    public void setCustomersModels(List<CustomersModel> customersModels) {
+    public void setCustomersModels(CustomersModel customersModels) {
         this.customersModels = customersModels;
     }
 
-    public void setCarsModels(List<CarsModel> carsModels) {
+    public void setCarsModels(CarsModel carsModels) {
         this.carsModels = carsModels;
     }
 
-    public void setDriversModels(List<DriversModel> driversModels) {
+    public void setDriversModels(DriversModel driversModels) {
         this.driversModels = driversModels;
     }
 
@@ -100,7 +99,22 @@ public class OrdersModel extends DriversModel{
         this.toAddress = toAddress;
     }
 
-    public void setCallOperatorsModels(List<CallOperatorsModel> callOperatorsModels) {
+    public void setCallOperatorsModels(CallOperatorsModel callOperatorsModels) {
         this.callOperatorsModels = callOperatorsModels;
+    }
+
+    @Override
+    public String toString() {
+        return "OrdersModel{" +
+                "id=" + id +
+                ", time='" + time + '\'' +
+                ", total=" + total +
+                ", customersModels=" + customersModels +
+                ", carsModels=" + carsModels +
+                ", driversModels=" + driversModels +
+                ", fromAddress='" + fromAddress + '\'' +
+                ", toAddress='" + toAddress + '\'' +
+                ", callOperatorsModels=" + callOperatorsModels +
+                '}';
     }
 }

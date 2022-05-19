@@ -12,5 +12,5 @@ public interface ICarServicesDAO {
 
     void deleteCarServicesById(CarServicesModel carServicesModel);
 
-    CarServicesModel getCarServices();
+    CarServicesModel getCarServicesById(int id);
 }

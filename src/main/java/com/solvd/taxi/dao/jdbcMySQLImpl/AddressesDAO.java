@@ -1,8 +1,7 @@
 package com.solvd.taxi.dao.jdbcMySQLImpl;
 
 import com.solvd.taxi.dao.IAddressesDAO;
-import com.solvd.taxi.models.AddressesModel;
-import com.solvd.taxi.models.CallOperatorsModel;
+import com.solvd.taxi.models.*;
 import com.solvd.taxi.utilites.ConnectionDB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,7 +18,8 @@ public class AddressesDAO implements IAddressesDAO {
     private static final Logger LOGGER = LogManager.getLogger(AddressesDAO.class);
 
     final String DELETE = "DELETE FROM Address WHERE id=?";
-    final String GET = "SELECT * FROM Address ORDER BY id";
+    final String GET = "SELECT * FROM Address WHERE id=?";
+    private static final String GET_ALL = "SELECT * FROM Address";
     final String INSERT = "INSERT INTO Address VALUES (?, ?, ?)";
     final String UPDATE = "UPDATE Address SET zip=? WHERE id=?";
 
@@ -82,21 +82,23 @@ public class AddressesDAO implements IAddressesDAO {
             ConnectionDB.close(dbConnect);
             ConnectionDB.close(rs);
         }
-
-
     }
 
     @Override
-    public AddressesModel getAddresses() {
-        List<AddressesModel> allAddresses = new ArrayList<>();
+    public AddressesModel getAddressesById(int id) {
         Connection dbConnect = ConnectionDB.getConnection();
+        AddressesModel addressesModel = new AddressesModel();
+        CitiesModel citiesModel = new CitiesModel();
         try {
             stmt = dbConnect.prepareStatement(GET);
+            stmt.setInt(1, id);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                LOGGER.info("\nId: " + rs.getInt(1)
-                        + "\nZip code: " + rs.getString(2)
-                        + "\nCities: " + rs.getString(3));
+                addressesModel.setId(rs.getInt(1));
+                addressesModel.setZipCode(rs.getInt(2));
+                citiesModel.setId(rs.getInt("id"));
+                addressesModel.setCitiesModel(citiesModel);
+                addressesModel.toString();
             }
             LOGGER.info("ALL is OK!");
         } catch (Exception e) {
@@ -107,6 +109,34 @@ public class AddressesDAO implements IAddressesDAO {
             ConnectionDB.close(dbConnect);
             ConnectionDB.close(rs);
         }
-        return null;
+        return addressesModel;
+    }
+
+    public List<AddressesModel> getAllAddresses() {
+        ArrayList<AddressesModel> addresses = new ArrayList<>();
+        CitiesModel citiesModel = new CitiesModel();
+        Connection dbConnect = ConnectionDB.getConnection();
+        try {
+            stmt = dbConnect.prepareStatement(GET_ALL);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                AddressesModel addressesModel = new AddressesModel();
+                addressesModel.setId(rs.getInt(1));
+                addressesModel.setZipCode(rs.getInt(2));
+                citiesModel.setId(rs.getInt("id"));
+                addressesModel.setCitiesModel(citiesModel);
+                addresses.add(addressesModel);
+                addressesModel.toString();
+            }
+            LOGGER.info("ALL is OK!");
+            LOGGER.info(addresses);
+        } catch (Exception e) {
+            LOGGER.info(e);
+        } finally {
+            ConnectionDB.close(stmt);
+            ConnectionDB.close(dbConnect);
+            ConnectionDB.close(rs);
+        }
+        return addresses;
     }
 }

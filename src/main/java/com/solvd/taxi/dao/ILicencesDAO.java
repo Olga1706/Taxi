@@ -2,6 +2,8 @@ package com.solvd.taxi.dao;
 
 import com.solvd.taxi.models.LicencesModel;
 
+import java.util.List;
+
 public interface ILicencesDAO {
 
     void createLicences(LicencesModel licencesModel);
@@ -10,5 +12,7 @@ public interface ILicencesDAO {
 
     void deleteLicencesById(LicencesModel licencesModel);
 
-    LicencesModel getLicences();
+    LicencesModel getLicencesById(int id);
+
+    List<LicencesModel> getAllLicences();
 }

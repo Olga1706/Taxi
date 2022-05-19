@@ -2,7 +2,9 @@ package com.solvd.taxi.dao.jdbcMySQLImpl;
 
 import com.solvd.taxi.dao.ICitiesDAO;
 import com.solvd.taxi.models.AddressesModel;
+import com.solvd.taxi.models.CarServicesModel;
 import com.solvd.taxi.models.CitiesModel;
+import com.solvd.taxi.models.CustomerTypesModel;
 import com.solvd.taxi.utilites.ConnectionDB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,7 +21,8 @@ public class CitiesDAO implements ICitiesDAO {
     private static final Logger LOGGER = LogManager.getLogger(CitiesDAO.class);
 
     final String DELETE = "DELETE FROM Cities WHERE id=?";
-    final String GET = "SELECT * FROM Cities ORDER BY id";
+    final String GET = "SELECT * FROM Cities WHERE id=?";
+    private static final String GET_ALL = "SELECT * FROM Cities";
     final String INSERT = "INSERT INTO Cities VALUES (?, ?)";
     final String UPDATE = "UPDATE Cities SET name=? WHERE id=?";
 
@@ -85,15 +88,17 @@ public class CitiesDAO implements ICitiesDAO {
     }
 
     @Override
-    public CitiesModel getCities() {
-        List<CitiesModel> allCities = new ArrayList<>();
+    public CitiesModel getCitiesById(int id) {
         Connection dbConnect = ConnectionDB.getConnection();
+        CitiesModel citiesModel = new CitiesModel();
         try {
             stmt = dbConnect.prepareStatement(GET);
+            stmt.setInt(1, id);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                LOGGER.info("\nId: " + rs.getInt(1)
-                        + "\nCities: " + rs.getString(2));
+                citiesModel.setId(rs.getInt(1));
+                citiesModel.setCityName(rs.getString(2));
+                citiesModel.toString();
             }
             LOGGER.info("ALL is OK!");
         } catch (Exception e) {
@@ -104,6 +109,31 @@ public class CitiesDAO implements ICitiesDAO {
             ConnectionDB.close(dbConnect);
             ConnectionDB.close(rs);
         }
-        return null;
+        return citiesModel;
+    }
+
+    public List<CitiesModel> getAllCities() {
+        ArrayList<CitiesModel> citiesModels = new ArrayList<>();
+        Connection dbConnect = ConnectionDB.getConnection();
+        try {
+            stmt = dbConnect.prepareStatement(GET_ALL);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                CitiesModel cities = new CitiesModel();
+                cities.setId(rs.getInt("id"));
+                cities.setCityName(rs.getString("name"));
+                citiesModels.add(cities);
+                cities.toString();
+            }
+            LOGGER.info("ALL is OK!");
+            LOGGER.info(citiesModels);
+        } catch (Exception e) {
+            LOGGER.info(e);
+        } finally {
+            ConnectionDB.close(stmt);
+            ConnectionDB.close(dbConnect);
+            ConnectionDB.close(rs);
+        }
+        return citiesModels;
     }
 }

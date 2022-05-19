@@ -6,22 +6,17 @@ public class DriversModel{
     private int id;
     private String firstName;
     private String dayOfStart;
-    private List<OrdersModel> ordersModel;
-    private List<LicencesModel> licencesModel;
+
 
 
     public DriversModel() {
 
     }
 
-    public DriversModel(int id, String firstName, String dayOfStart,
-                        List<OrdersModel> ordersModel,
-                        List<LicencesModel> licencesModel) {
+    public DriversModel(int id, String firstName, String dayOfStart) {
         this.id = id;
         this.firstName = firstName;
         this.dayOfStart = dayOfStart;
-        this.ordersModel = ordersModel;
-        this.licencesModel = licencesModel;
     }
 
     public int getId() {
@@ -36,14 +31,6 @@ public class DriversModel{
         return dayOfStart;
     }
 
-    public List<OrdersModel> getOrdersModel() {
-        return ordersModel;
-    }
-
-    public List<LicencesModel> getLicencesModel() {
-        return licencesModel;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -56,11 +43,12 @@ public class DriversModel{
         this.dayOfStart = dayOfStart;
     }
 
-    public void setOrdersModel(List<OrdersModel> ordersModel) {
-        this.ordersModel = ordersModel;
-    }
-
-    public void setLicencesModel(List<LicencesModel> licencesModel) {
-        this.licencesModel = licencesModel;
+    @Override
+    public String toString() {
+        return "DriversModel{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", dayOfStart='" + dayOfStart + '\'' +
+                '}';
     }
 }

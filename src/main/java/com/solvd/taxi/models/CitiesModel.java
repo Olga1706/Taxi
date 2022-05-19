@@ -33,4 +33,12 @@ public class CitiesModel {
     public void setCityName(String cityName) {
         this.cityName = cityName;
     }
+
+    @Override
+    public String toString() {
+        return "CitiesModel{" +
+                "id=" + id +
+                ", cityName='" + cityName + '\'' +
+                '}';
+    }
 }

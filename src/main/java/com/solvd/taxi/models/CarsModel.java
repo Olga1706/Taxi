@@ -15,6 +15,10 @@ public class CarsModel {
         this.carTypesModel = carTypesModel;
     }
 
+    public CarsModel(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
@@ -37,5 +41,14 @@ public class CarsModel {
 
     public void setCarTypesModel(CarTypesModel carTypesModel) {
         this.carTypesModel = carTypesModel;
+    }
+
+    @Override
+    public String toString() {
+        return "CarsModel{" +
+                "id=" + id +
+                ", numberCar='" + numberCar + '\'' +
+                ", carTypesModel=" + carTypesModel +
+                '}';
     }
 }

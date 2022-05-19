@@ -2,6 +2,8 @@ package com.solvd.taxi.dao;
 
 import com.solvd.taxi.models.CustomersModel;
 
+import java.util.List;
+
 public interface ICustomersDAO {
 
     void createCustomers(CustomersModel customersModel);
@@ -10,7 +12,9 @@ public interface ICustomersDAO {
 
     void deleteCustomersById(CustomersModel customersModel);
 
-    CustomersModel getCustomers();
+    CustomersModel getCustomersById(int id);
+
+    List<CustomersModel> getAllCustomers();
 
 }
 

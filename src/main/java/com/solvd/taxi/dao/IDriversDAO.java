@@ -11,5 +11,5 @@ public interface IDriversDAO {
 
     void deleteDriversById(DriversModel driversModel);
 
-    DriversModel getDrivers();
+    DriversModel getDriversById(int id);
 }

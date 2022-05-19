@@ -4,6 +4,8 @@ package com.solvd.taxi.dao;
 import com.solvd.taxi.models.CallOperatorsModel;
 import com.solvd.taxi.models.CarOrdersModel;
 
+import java.util.List;
+
 public interface ICarOrdersDAO {
 
     void createCarOrders(CarOrdersModel carOrders);
@@ -12,5 +14,7 @@ public interface ICarOrdersDAO {
 
     void deleteCarOrdersById(CarOrdersModel carOrders);
 
-    CarOrdersModel getCarOrders();
+    CarOrdersModel getCarOrdersById(int id);
+
+    List<CarOrdersModel> getAllCarOrders();
 }

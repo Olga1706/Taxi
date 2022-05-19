@@ -2,7 +2,7 @@ package com.solvd.taxi.dao.jdbcMySQLImpl;
 
 import com.solvd.taxi.dao.ICallOperatorsDAO;
 import com.solvd.taxi.models.CallOperatorsModel;
-import com.solvd.taxi.models.CustomersModel;
+import com.solvd.taxi.models.CustomerTypesModel;
 import com.solvd.taxi.utilites.ConnectionDB;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,7 +19,8 @@ public class CallOperatorsDAO implements ICallOperatorsDAO {
     private static final Logger LOGGER = LogManager.getLogger(CallOperatorsDAO.class);
 
     final String DELETE = "DELETE FROM CallOperators WHERE id=?";
-    final String GET = "SELECT * FROM CallOperators ORDER BY id";
+    final String GET = "SELECT * FROM CallOperators WHERE id=?";
+    private static final String GET_ALL = "SELECT * FROM CallOperators";
     final String INSERT = "INSERT INTO CallOperators VALUES (?, ?, ?)";
     final String UPDATE = "UPDATE CallOperators SET l_name=? WHERE id=?";
 
@@ -85,16 +86,18 @@ public class CallOperatorsDAO implements ICallOperatorsDAO {
     }
 
     @Override
-    public CallOperatorsModel getCallOperators() {
-        List<CallOperatorsModel> allCallOperators = new ArrayList<>();
+    public CallOperatorsModel getCallOperatorsById(int id) {
         Connection dbConnect = ConnectionDB.getConnection();
+        CallOperatorsModel callOperatorsModel = new CallOperatorsModel();
         try {
             stmt = dbConnect.prepareStatement(GET);
+            stmt.setInt(1, id);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                LOGGER.info("\nId: " + rs.getInt(1)
-                        + "\nFirst name: " + rs.getString(2)
-                        + "\nLast name: " + rs.getString(3));
+                callOperatorsModel.setId(rs.getInt(1));
+                callOperatorsModel.setFirstName(rs.getString(2));
+                callOperatorsModel.setLastName(rs.getString(3));
+                callOperatorsModel.toString();
             }
             LOGGER.info("ALL is OK!");
         } catch (Exception e) {
@@ -105,6 +108,32 @@ public class CallOperatorsDAO implements ICallOperatorsDAO {
             ConnectionDB.close(dbConnect);
             ConnectionDB.close(rs);
         }
-        return null;
+        return callOperatorsModel;
+    }
+
+    public List<CallOperatorsModel> getALLCallOperators() {
+        ArrayList<CallOperatorsModel> callOperatorsModels = new ArrayList<CallOperatorsModel>();
+        Connection dbConnect = ConnectionDB.getConnection();
+        try {
+            stmt = dbConnect.prepareStatement(GET_ALL);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                CallOperatorsModel callOperators = new CallOperatorsModel();
+                callOperators.setId(rs.getInt("id"));
+                callOperators.setFirstName(rs.getString("f_name"));
+                callOperators.setLastName(rs.getString("l_name"));
+                callOperatorsModels.add(callOperators);
+                callOperators.toString();
+            }
+            LOGGER.info("ALL is OK!");
+        } catch (Exception e) {
+            LOGGER.info(e);
+        }
+        finally {
+            ConnectionDB.close(stmt);
+            ConnectionDB.close(dbConnect);
+            ConnectionDB.close(rs);
+        }
+        return callOperatorsModels;
     }
 }
