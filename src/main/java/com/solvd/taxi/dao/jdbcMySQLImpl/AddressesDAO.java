@@ -123,8 +123,8 @@ public class AddressesDAO implements IAddressesDAO {
                 AddressesModel addressesModel = new AddressesModel();
                 addressesModel.setId(rs.getInt(1));
                 addressesModel.setZipCode(rs.getInt(2));
-                citiesModel.setId(rs.getInt("id"));
-                addressesModel.setCitiesModel(citiesModel);
+                CitiesDAO dao = new CitiesDAO();
+                addressesModel.setCitiesModel(dao.getCitiesById(rs.getInt("cities_id")));
                 addresses.add(addressesModel);
                 addressesModel.toString();
             }
