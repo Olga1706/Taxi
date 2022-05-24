@@ -1,0 +1,5 @@
+{
+  "id" : 5,
+  "cityName" : "Boston",
+  "addresses" : [ "university", "city centre", "downtown" ]
+}
