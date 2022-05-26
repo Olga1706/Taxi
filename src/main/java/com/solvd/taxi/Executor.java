@@ -1,18 +1,14 @@
 package com.solvd.taxi;
 
-import com.solvd.taxi.dao.ICitiesDAO;
 import com.solvd.taxi.dao.jdbcMySQLImpl.*;
-import com.solvd.taxi.models.*;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
 import java.io.*;
 
-import com.solvd.taxi.myBatisClass.Cities;
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import com.solvd.taxi.dao.myBatisClassDAO.CitiesMyBatisDAO;
+import com.solvd.taxi.dao.myBatisClassDAO.DriversMyBatisDAO;
+import com.solvd.taxi.models.CitiesModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -104,7 +100,7 @@ public class Executor {
         //LOGGER.info(addressesDAO.getAddressesById(2));
         //addressesDAO.getAllAddresses();
 
-        CitiesDAO citiesDAO = new CitiesDAO();
+        com.solvd.taxi.dao.jdbcMySQLImpl.CitiesDAO citiesDAO = new com.solvd.taxi.dao.jdbcMySQLImpl.CitiesDAO();
         //citiesDAO.getAllCities();
         //LOGGER.info(citiesDAO.getCitiesById(2));
         /*CitiesModel citiesModel = new CitiesModel();
@@ -137,22 +133,26 @@ public class Executor {
         } finally {
             session.close();
         }*/
-        Cities cities = new Cities();
+        CitiesMyBatisDAO cities = new CitiesMyBatisDAO();
         LOGGER.info(cities.getCitiesById(1));
 
-        CitiesModel citiesModel = new CitiesModel();
+
+       /* CitiesModel citiesModel = new CitiesModel();
         citiesModel.setId(9);
         citiesModel.setCityName("Washington");
-        cities.createCities(citiesModel);
+        cities.createCities(citiesModel);*/
 
-        CitiesModel citiesModel1 = new CitiesModel();
-        citiesModel1.setCityName("Rosi");
+       /* CitiesModel citiesModel1 = new CitiesModel();
+        citiesModel1.setCityName("New Jersey");
         citiesModel1.setId(2);
-        cities.updateCities(citiesModel1);
+        cities.updateCities(citiesModel1);*/
 
-        /*CitiesModel citiesModel2 = new CitiesModel();
+       /* CitiesModel citiesModel2 = new CitiesModel();
         citiesModel2.setId(9);
-        cities.deleteCitiesById(citiesModel2);*/
+        cities.deleteCitiesById(citiesModel2);
+*/
+        DriversMyBatisDAO driversMyBatisDAO = new DriversMyBatisDAO();
+      //  LOGGER.info(driversMyBatisDAO.getDriversById(1));
     }
 }
 

@@ -1,20 +1,16 @@
-package com.solvd.taxi.myBatisClass;
+package com.solvd.taxi.dao.myBatisClassDAO;
 
 import com.solvd.taxi.dao.ICitiesDAO;
 import com.solvd.taxi.models.CitiesModel;
 import com.solvd.taxi.utilites.MyBatis;
-import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.io.InputStream;
 
-public class Cities {
-    private static final Logger LOGGER = LogManager.getLogger(Cities.class);
+public class CitiesMyBatisDAO {
+    private static final Logger LOGGER = LogManager.getLogger(CitiesMyBatisDAO.class);
 
     public void createCities(CitiesModel citiesModel) {
         SqlSession sqlSession = MyBatis.getSqlSessionFactory().openSession();
@@ -51,18 +47,13 @@ public class Cities {
 
     public CitiesModel getCitiesById(Integer id) throws IOException {
 
-        String resource = "mybatis_config.xml";
-        InputStream inputStream = Resources.getResourceAsStream(resource);
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-
-        SqlSession session = sqlSessionFactory.openSession();
+        SqlSession sqlSession = MyBatis.getSqlSessionFactory().openSession();
         CitiesModel citiesModel;
         try {
-            ICitiesDAO citiesDAO = session.getMapper(ICitiesDAO.class);
+            ICitiesDAO citiesDAO = sqlSession.getMapper(ICitiesDAO.class);
             citiesModel = citiesDAO.getCitiesById(id);
-            LOGGER.info(citiesModel);
         } finally {
-            session.close();
+            sqlSession.close();
         }
         return citiesModel;
     }

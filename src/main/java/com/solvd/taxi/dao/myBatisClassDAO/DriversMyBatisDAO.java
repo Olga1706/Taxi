@@ -1,21 +1,17 @@
-package com.solvd.taxi.myBatisClass;
+package com.solvd.taxi.dao.myBatisClassDAO;
 
 
 import com.solvd.taxi.dao.IDriversDAO;
 import com.solvd.taxi.models.DriversModel;
 import com.solvd.taxi.utilites.MyBatis;
-import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.io.InputStream;
 
-public class Drivers {
-    private static final Logger LOGGER = LogManager.getLogger(Drivers.class);
+public class DriversMyBatisDAO {
+    private static final Logger LOGGER = LogManager.getLogger(DriversMyBatisDAO.class);
 
     public void createDrivers(DriversModel driversModel) {
         SqlSession sqlSession = MyBatis.getSqlSessionFactory().openSession();
@@ -52,18 +48,13 @@ public class Drivers {
 
     public DriversModel getDriversById(Integer id) throws IOException {
 
-        String resource = "mybatis_config.xml";
-        InputStream inputStream = Resources.getResourceAsStream(resource);
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-
-        SqlSession session = sqlSessionFactory.openSession();
+        SqlSession sqlSession = MyBatis.getSqlSessionFactory().openSession();
         DriversModel driversModel;
         try {
-            IDriversDAO driversDAO = session.getMapper(IDriversDAO.class);
+            IDriversDAO driversDAO = sqlSession.getMapper(IDriversDAO.class);
             driversModel = driversDAO.getDriversById(id);
-            LOGGER.info(driversModel);
         } finally {
-            session.close();
+            sqlSession.close();
         }
         return driversModel;
     }

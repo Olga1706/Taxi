@@ -3,24 +3,30 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.solvd.taxi.dao.IDriversDAO">
+    <resultMap type="com.solvd.taxi.models.DriversModel" id="DriversModelResultMap" autoMapping="false">
+        <id column="id" property="id" />
+        <result column="f_name" property="firstName" />
+        <result column="date_of_start" property="dayOfStart" />
+
+    </resultMap>
 
     <insert id="createDrivers" parameterType="com.solvd.taxi.models.DriversModel"
             useGeneratedKeys="true" keyProperty="id">
         INSERT INTO Drivers (id,f_name,date_of_start)
-        VALUES (#{id},#{f_name},#{date_of_start})
+        VALUES (#{id},#{firstName},#{dayOfStart})
     </insert>
 
-    <update id="updateDrivers" parameterType="com.solvd.taxi.models.DriversModel">
+    <update id="updateDriversById" parameterType="com.solvd.taxi.models.DriversModel">
         UPDATE Drivers set
-        f_name = #{f_name},
+        f_name = #{firstName}
         WHERE id = #{id}
     </update>
 
-    <delete id="deleteDrivers" parameterType="com.solvd.taxi.models.DriversModel">
+    <delete id="deleteDriversById" parameterType="com.solvd.taxi.models.DriversModel">
         DELETE from Drivers WHERE id = #{id}
     </delete>
 
-    <select id="getDriversById" resultType="com.solvd.taxi.models.DriversModel">
+    <select id="getDriversById" resultMap="DriversModelResultMap" resultType="com.solvd.taxi.models.DriversModel">
         SELECT * FROM Drivers
         WHERE id = #{id}
     </select>

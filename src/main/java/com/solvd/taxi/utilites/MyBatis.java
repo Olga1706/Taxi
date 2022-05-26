@@ -10,21 +10,17 @@ import java.io.Reader;
 public class MyBatis {
     private static SqlSessionFactory factory;
 
-    private MyBatis() {
-    }
-    static
-    {
-        Reader rdr = null;
-        try {
-            rdr = Resources.getResourceAsReader("mybatis_config.xml");
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
-        }
-        factory = new SqlSessionFactoryBuilder().build(rdr);
+    public MyBatis() {
     }
 
-    public static SqlSessionFactory getSqlSessionFactory()
-    {
+    public static SqlSessionFactory getSqlSessionFactory() {
+        Reader rdr = null;
+            try {
+                rdr = Resources.getResourceAsReader("mappers/mybatis_config.xml");
+            } catch (IOException e) {
+                throw new RuntimeException(e.getMessage());
+            }
+            factory = new SqlSessionFactoryBuilder().build(rdr);
         return factory;
     }
 }

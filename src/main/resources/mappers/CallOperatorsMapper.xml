@@ -3,24 +3,28 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.solvd.taxi.dao.ICallOperatorsDAO">
-
+    <resultMap type="com.solvd.taxi.models.CallOperatorsModel" id="CallOperatorsModelResultMap" autoMapping="false">
+        <id column="id" property="id" />
+        <result column="f_name" property="firstName" />
+        <result column="l_name" property="lastName" />
+    </resultMap>
     <insert id="createCallOperators" parameterType="com.solvd.taxi.models.CallOperatorsModel"
             useGeneratedKeys="true" keyProperty="id">
         INSERT INTO CallOperators (id,f_name,l_name)
-        VALUES (#{id},#{f_name},#{l_name})
+        VALUES (#{id},#{firstName},#{lastName})
     </insert>
 
-    <update id="updateCallOperators" parameterType="com.solvd.taxi.models.CallOperatorsModel">
+    <update id="updateCallOperatorsById" parameterType="com.solvd.taxi.models.CallOperatorsModel">
         UPDATE CallOperators set
-        f_name = #{f_name},
+        f_name = #{firstName}
         WHERE id = #{id}
     </update>
 
-    <delete id="deleteCallOperators" parameterType="com.solvd.taxi.models.CallOperatorsModel">
+    <delete id="deleteCallOperatorsById" parameterType="com.solvd.taxi.models.CallOperatorsModel">
         DELETE from CallOperators WHERE id = #{id}
     </delete>
 
-    <select id="getCallOperatorsById" resultType="com.solvd.taxi.models.CallOperatorsModel">
+    <select id="getCallOperatorsById" resultMap="CallOperatorsModelResultMap" resultType="com.solvd.taxi.models.CallOperatorsModel">
         SELECT * FROM CallOperators
         WHERE id = #{id}
     </select>
