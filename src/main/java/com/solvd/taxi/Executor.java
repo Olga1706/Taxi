@@ -138,7 +138,7 @@ public class Executor {
             session.close();
         }*/
         Cities cities = new Cities();
-        cities.getCitiesById(1);
+        LOGGER.info(cities.getCitiesById(1));
 
         CitiesModel citiesModel = new CitiesModel();
         citiesModel.setId(9);
