@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.taxi.dao.ICitiesDAO">
+  <!--  <resultMap type="com.solvd.taxi.models.CitiesModel" id="CitiesModelResultMap" autoMapping="false">
+        <id column="id" property="id" />
+        <result column="name" property="cityName" />
+    </resultMap> -->
+    <insert id="createCities" parameterType="com.solvd.taxi.models.CitiesModel"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO Cities (id,name)
+        VALUES (#{id},#{name})
+    </insert>
+
+    <update id="updateCities" parameterType="com.solvd.taxi.models.CitiesModel">
+        UPDATE Cities set
+        name = #{name},
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteCities" parameterType="com.solvd.taxi.models.CitiesModel">
+        DELETE from Cities WHERE id = #{id}
+    </delete>
+
+    <select id="getCitiesById" resultType="com.solvd.taxi.models.CitiesModel">
+        SELECT * FROM Cities
+        WHERE id = #{id}
+    </select>
+
+</mapper>

@@ -16,7 +16,7 @@ public class SaxWriter {
         driver.setLastName("Smith");
         driver.setDayOfStart("11/03/2022");
         XMLOutputFactory factory= XMLOutputFactory.newFactory();
-        XMLStreamWriter writer=factory.createXMLStreamWriter(new FileOutputStream("src/main/resources/xml/empty.xml"));
+        XMLStreamWriter writer=factory.createXMLStreamWriter(new FileOutputStream("src/main/resources/xml/Empty.xml"));
         writer.writeStartDocument();
         writer.writeCharacters("\n");
         writer.writeStartElement("driver");

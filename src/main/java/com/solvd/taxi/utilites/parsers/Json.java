@@ -16,7 +16,7 @@ public class Json {
     private static final Logger LOGGER = LogManager.getLogger(Json.class);
 
     public static void main(String[] args) {
-       writeToJson();
+       //writeToJson();
        //readFromJson();
     }
 
@@ -26,11 +26,13 @@ public class Json {
         citiesModel.setId(5);
         citiesModel.setCityName("Boston");
 
+/*
         List<String> addresses = new ArrayList<String>();
         addresses.add("university");
         addresses.add("city centre");
         addresses.add("downtown");
         citiesModel.setAddresses(addresses);
+*/
 
         try {
 

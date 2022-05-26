@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.taxi.dao.IDriversDAO">
+
+    <insert id="createDrivers" parameterType="com.solvd.taxi.models.DriversModel"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO Drivers (id,f_name,date_of_start)
+        VALUES (#{id},#{f_name},#{date_of_start})
+    </insert>
+
+    <update id="updateDrivers" parameterType="com.solvd.taxi.models.DriversModel">
+        UPDATE Drivers set
+        f_name = #{f_name},
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteDrivers" parameterType="com.solvd.taxi.models.DriversModel">
+        DELETE from Drivers WHERE id = #{id}
+    </delete>
+
+    <select id="getDriversById" resultType="com.solvd.taxi.models.DriversModel">
+        SELECT * FROM Drivers
+        WHERE id = #{id}
+    </select>
+
+</mapper>

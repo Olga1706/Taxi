@@ -1,26 +1,20 @@
 package com.solvd.taxi;
 
+import com.solvd.taxi.dao.ICitiesDAO;
 import com.solvd.taxi.dao.jdbcMySQLImpl.*;
 import com.solvd.taxi.models.*;
 
 import javax.xml.bind.JAXBException;
-import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.*;
 
-import com.solvd.taxi.utilites.parsers.Jaxb;
-import com.solvd.taxi.utilites.parsers.SaxReader;
-import com.solvd.taxi.utilites.parsers.SaxWriter;
+import com.solvd.taxi.myBatisClass.Cities;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.xml.sax.Attributes;
-import org.xml.sax.helpers.DefaultHandler;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-import java.io.File;
 
 
 public class Executor {
@@ -28,7 +22,7 @@ public class Executor {
     private static final Logger LOGGER = LogManager.getLogger(Executor.class);
 
 
-    public static void main(String[] args) throws FileNotFoundException, XMLStreamException, JAXBException {
+    public static void main(String[] args) throws IOException, XMLStreamException, JAXBException {
         //SaxWriter.writeXML();
         // Jaxb.writeToXML();
 
@@ -130,6 +124,35 @@ public class Executor {
         //ordersDAO.getAllOrders();
         //ordersDAO.getOrdersRightJoinDrivers();
 
+
+        /*String resource = "mappers/mybatis_config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+
+        SqlSession session = sqlSessionFactory.openSession();
+        try {
+            ICitiesDAO dao = session.getMapper(ICitiesDAO.class);
+            CitiesModel citiesModel = dao.getCitiesById(1);
+            LOGGER.info(citiesModel);
+        } finally {
+            session.close();
+        }*/
+        Cities cities = new Cities();
+        cities.getCitiesById(1);
+
+        CitiesModel citiesModel = new CitiesModel();
+        citiesModel.setId(9);
+        citiesModel.setCityName("Washington");
+        cities.createCities(citiesModel);
+
+        CitiesModel citiesModel1 = new CitiesModel();
+        citiesModel1.setCityName("Rosi");
+        citiesModel1.setId(2);
+        cities.updateCities(citiesModel1);
+
+        /*CitiesModel citiesModel2 = new CitiesModel();
+        citiesModel2.setId(9);
+        cities.deleteCitiesById(citiesModel2);*/
     }
 }
 

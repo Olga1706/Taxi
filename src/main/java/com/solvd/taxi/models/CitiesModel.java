@@ -7,7 +7,7 @@ public class CitiesModel {
 
     private int id;
     private String cityName;
-    private List<String> addresses;
+
 
     public CitiesModel() {
 
@@ -18,10 +18,10 @@ public class CitiesModel {
     }
 
 
-    public CitiesModel(int id, String cityName, List<String> addresses) {
+    public CitiesModel(int id, String cityName) {
         this.id = id;
         this.cityName = cityName;
-        this.addresses = addresses;
+
     }
 
     public int getId() {
@@ -32,10 +32,6 @@ public class CitiesModel {
         return cityName;
     }
 
-    public List<String> getAddresses() {
-        return addresses;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -44,16 +40,12 @@ public class CitiesModel {
         this.cityName = cityName;
     }
 
-    public void setAddresses(List<String> addresses) {
-        this.addresses = addresses;
-    }
 
     @Override
     public String toString() {
         return "CitiesModel{" +
                 "id=" + id +
                 ", cityName='" + cityName + '\'' +
-                ", addresses=" + addresses +
                 '}';
     }
 }
