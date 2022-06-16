@@ -9,6 +9,14 @@ import java.io.*;
 import com.solvd.taxi.dao.myBatisClassDAO.CitiesMyBatisDAO;
 import com.solvd.taxi.dao.myBatisClassDAO.DriversMyBatisDAO;
 import com.solvd.taxi.models.CitiesModel;
+import com.solvd.taxi.patterns.Singleton;
+import com.solvd.taxi.patterns.abstractFactory.Bmw;
+import com.solvd.taxi.patterns.abstractFactory.ICarServices;
+import com.solvd.taxi.patterns.builder.Driver;
+import com.solvd.taxi.patterns.builder.DriverBuilder;
+import com.solvd.taxi.patterns.factory.Factory;
+import com.solvd.taxi.patterns.factory.IPerson;
+import com.solvd.taxi.patterns.observer.Observer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,6 +27,29 @@ public class Executor {
 
 
     public static void main(String[] args) throws IOException, XMLStreamException, JAXBException {
+        Singleton singletonOne = Singleton.getInstance();
+        Singleton singletonTwo = Singleton.getInstance();
+        singletonOne.setTest(22);
+       // LOGGER.info(singletonTwo.getTest());
+
+        String person = "driver";
+        Factory factory = new Factory();
+        IPerson iPerson = factory.getPerson(person);
+        //iPerson.getPerson();
+
+
+        ICarServices carServices = new Bmw();
+        //carServices.refunDiesel();
+
+        Driver driver= new DriverBuilder().setId(1).setFirstName("Jim").getDriver();
+        //LOGGER.info(driver);
+
+        Observer observerOne= new Observer("Observer one");
+        Observer observerTwo= new Observer("Observer two");
+        //observerOne.setValue("Some example value");
+        //observerTwo.setValue("Some new example value");
+
+
         //SaxWriter.writeXML();
         // Jaxb.writeToXML();
 
@@ -134,7 +165,7 @@ public class Executor {
             session.close();
         }*/
         CitiesMyBatisDAO cities = new CitiesMyBatisDAO();
-        LOGGER.info(cities.getCitiesById(1));
+       // LOGGER.info(cities.getCitiesById(1));
 
 
        /* CitiesModel citiesModel = new CitiesModel();
